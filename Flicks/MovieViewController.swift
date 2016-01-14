@@ -7,13 +7,30 @@
 //
 
 import UIKit
+import AFNetworking
 
 class MovieViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var tableView: UITableView!
-    
+    var refreshControl: UIRefreshControl!
     var movies: [NSDictionary]?
+    
+    @IBOutlet var loadingAcitivity: UIActivityIndicatorView!
+    
+    func didRefresh() {
+        self.tableView.reloadData()
+        self.refreshControl.endRefreshing()
+
+    }
+    override func viewWillAppear(animated: Bool) {
+        loadingAcitivity.startAnimating()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingAcitivity.stopAnimating()
+        refreshControl = UIRefreshControl()
+        self.tableView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: Selector("didRefresh"), forControlEvents: UIControlEvents.ValueChanged)
+
         tableView.dataSource = self
         tableView.delegate = self
         // Do any additional setup after loading the view.
@@ -59,6 +76,12 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         let movie = movies![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
+        let posterpath = movie["poster_path"] as! String
+        let urlbase = "http://image.tmdb.org/t/p/w500/"
+        
+        let imageUrl = NSURL(string: urlbase+posterpath)
+        
+        cell.posterView.setImageWithURL(imageUrl!)
         cell.title.text = title
         cell.overview.text = overview
         return cell

@@ -16,6 +16,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="poa-3f-M3x">
+                                    <rect key="frame" x="0.0" y="199" width="320" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="171" id="2X6-uq-QdC" customClass="MovieCell" customModule="Flicks" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="171"/>
@@ -25,23 +30,28 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uAl-Uy-Uof">
-                                                    <rect key="frame" x="8" y="8" width="304" height="21"/>
+                                                    <rect key="frame" x="113" y="8" width="199" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xF3-E2-vhM">
-                                                    <rect key="frame" x="8" y="41" width="304" height="121"/>
+                                                    <rect key="frame" x="113" y="41" width="199" height="121"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="5pa-aA-MXq">
+                                                    <rect key="frame" x="8" y="8" width="97" height="154"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="overview" destination="xF3-E2-vhM" id="IYy-Mm-1Q4"/>
+                                            <outlet property="posterView" destination="5pa-aA-MXq" id="ZdK-FV-PPz"/>
                                             <outlet property="title" destination="uAl-Uy-Uof" id="LJg-lQ-dGX"/>
                                         </connections>
                                     </tableViewCell>
@@ -51,6 +61,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="loadingAcitivity" destination="poa-3f-M3x" id="Ghm-BI-5Ll"/>
                         <outlet property="tableView" destination="nIO-aP-DiO" id="Z3L-gs-wXh"/>
                     </connections>
                 </viewController>
