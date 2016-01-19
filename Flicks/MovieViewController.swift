@@ -9,10 +9,11 @@
 import UIKit
 import AFNetworking
 
-class MovieViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MovieViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     @IBOutlet var tableView: UITableView!
     var refreshControl: UIRefreshControl!
     var movies: [NSDictionary]?
+    var filteredMovies: [NSDictionary]?
     
     @IBOutlet var loadingAcitivity: UIActivityIndicatorView!
     
@@ -23,10 +24,14 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     override func viewWillAppear(animated: Bool) {
         loadingAcitivity.startAnimating()
+        loadingAcitivity.hidden = false
+    }
+    override func viewDidAppear(animated: Bool) {
+        loadingAcitivity.stopAnimating()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingAcitivity.stopAnimating()
+        loadingAcitivity.hidden = true
         refreshControl = UIRefreshControl()
         self.tableView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: Selector("didRefresh"), forControlEvents: UIControlEvents.ValueChanged)
@@ -64,7 +69,11 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if let movies = movies {
+//            if tableView == self.searchDisplayController?.searchResultsTableView {
+//                filteredMovies?.count
+//            }else{
             return movies.count
+//            }
         }else{
             return 0
         }
@@ -86,6 +95,8 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.overview.text = overview
         return cell
     }
+    
+    
 
 
     /*
