@@ -14,6 +14,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     var refreshControl: UIRefreshControl!
     var movies: NSMutableArray?
     var filteredMovies = []
+    var endpoint : String = ""
     
     @IBOutlet var networkView: UIView!
     @IBOutlet var searchbar: UISearchBar!
@@ -26,6 +27,9 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 50))
+        imageView.image = UIImage(named: "Flicks")
+        self.navigationItem.titleView = imageView
         
         searchbar.delegate = self
         refreshControl = UIRefreshControl()
@@ -37,7 +41,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Do any additional setup after loading the view.
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string:"https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
         let session = NSURLSession(
             configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
@@ -109,7 +113,12 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.posterView.setImageWithURL(imageUrl!)
         cell.title.text = title
         cell.overview.text = overview
+        
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated:true)
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -129,14 +138,26 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     
 
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPathForCell(cell)
+        let movie :NSDictionary
+        if (filteredMovies.count == 0){
+            movie = movies![indexPath!.row] as! NSDictionary
+        }else{
+            movie = filteredMovies[(indexPath?.row)!] as! NSDictionary
+        }
+        let destinationViewController = segue.destinationViewController as! DetailViewController
+        destinationViewController.movie = movie 
+        
+        
     }
-    */
+    
 
 }
